@@ -1,0 +1,29 @@
+package Assingments;
+
+public class IntersectionOfArray {
+
+	public static void main(String[] args) {
+		
+		int myArr1 [] = {3,2,11,4,6,7};
+		int myArr2 [] = {1,2,8,4,9,7};
+		
+		for (int i = 0; i < myArr1.length; i++) {
+			for (int j = 0; j < myArr2.length; j++) {
+				
+				if (myArr1[i] == myArr2[j]) {
+					System.out.println("The Intersection is:" + myArr2[j]);
+					
+				}
+				
+			}
+			
+		}
+
+	}
+
+}
+
+output:
+The Intersection is:2
+The Intersection is:4
+The Intersection is:7

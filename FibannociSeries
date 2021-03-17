@@ -1,0 +1,28 @@
+package Assingments;
+
+public class FibannociSeries {
+
+	public static void main(String[] args) {
+		int n = 7;
+		int first = 1;
+		int second = 1;
+		int third = 0;
+		
+		System.out.print(first);
+		System.out.print(second);
+		
+		for (int i = 1; i <=n; i++) {
+			
+			third = first+second;
+			
+			System.out.print(third);
+			
+			first=second;
+			second=third;
+		}
+	}
+
+}
+
+output:
+112358132134

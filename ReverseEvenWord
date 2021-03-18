@@ -1,0 +1,37 @@
+package Assingments;
+
+public class ReverseEvenWord {
+
+	public static void main(String[] args) {
+		
+		
+		String test = "Welcome to Java Learning";
+		String[] word = test.split("");
+		System.out.println("Given String: Welcome to Java Learning");
+		
+		for (int i = 0; i < word.length; i++) 
+		{
+			if (i%2==0) {
+		
+				System.out.print(" ");
+				System.out.print(word[i]);
+				
+		}else if (i%2==1) {
+				String text = word[i];
+				System.out.print(" ");
+				char[] reversed = text.toCharArray();
+				
+				for (int j=reversed.length-1 ; j >=0;  j--) {
+					System.out.print (" " + reversed[j] + " ");
+			} 
+			
+		}
+
+		
+	}
+	}
+}
+
+output:
+Given String: Welcome to Java Learning
+ W  e  l  c  o  m  e     t  o     J  a  v  a     L  e  a  r  n  i  n  g 

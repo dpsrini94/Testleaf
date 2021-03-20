@@ -1,0 +1,165 @@
+package week2.day1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class CreateLead {
+	public static void main(String[] args) {
+
+			//step0: setup the driver using webdriver manager
+			WebDriverManager.chromedriver().setup();
+			
+			//Step1: Launch Browser
+			ChromeDriver driver = new ChromeDriver();
+		
+			//step 2: load url
+			driver.get("http://leaftaps.com/opentaps/control/main");
+
+			//step:3 maximize the screen
+			driver.manage().window().maximize();
+			
+			//step4: Find user name and pass value
+			driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+			
+			//step5: find password and pass value
+			driver.findElement(By.id("password")).sendKeys("crmsfa");
+			
+			//step6: find login and click
+			driver.findElement(By.className("decorativeSubmit")).click();
+			
+			//step7: verify the title
+			String title = driver.getTitle();
+			System.out.println(title);
+			
+			//step8: find and click crmsfa
+			driver.findElement(By.linkText("CRM/SFA")).click();
+			
+			//step9: find create lead and click
+			driver.findElement(By.linkText("Create Lead")).click();
+			
+			//step10: find the company name and pass value
+			driver.findElement(By.id("createLeadForm_companyName")).sendKeys("HCL Technologies");
+			
+			//step11: find the first name and pass value
+			driver.findElement(By.id("createLeadForm_firstName")).sendKeys("Dhivyapriya");
+			
+			//step12: find the last name and pass value
+			driver.findElement(By.id("createLeadForm_lastName")).sendKeys("Srinivasan");
+			
+			//step13: find the source dropdown and click 
+			WebElement element = driver.findElement(By.id("createLeadForm_dataSourceId"));
+			// create a new object for the select class to convert the element to dropdown
+			Select dd1 = new Select(element); 
+			dd1.selectByValue("LEAD_EMPLOYEE");
+			
+			//step14: find the Marketing camping and select the dropdown
+			WebElement element2 = driver.findElement(By.id("createLeadForm_marketingCampaignId"));
+			// create a new object for the select class to convert the element to dropdown
+			Select dd2 = new Select(element2);
+			dd2.selectByValue("DEMO_MKTG_CAMP");
+			
+			//step15: find parent account and pass value
+			driver.findElement(By.id("createLeadForm_parentPartyId")).sendKeys("democlass1");
+						
+			//step16: find first name local and pass value
+			driver.findElement(By.id("createLeadForm_firstNameLocal")).sendKeys("DP");
+			
+			//step17: find last local name and pass value
+			driver.findElement(By.id("createLeadForm_lastNameLocal")).sendKeys("Raghav");
+			
+			//step18: find salutation and pass value
+			driver.findElement(By.id("createLeadForm_personalTitle")).sendKeys("Mrs");
+			
+			//step19: find DOB and pass value
+			driver.findElement(By.id("createLeadForm_birthDate")).sendKeys("10/09/1994");
+			
+			//step20: find title and pass value
+			driver.findElement(By.id("createLeadForm_generalProfTitle")).sendKeys("SDET");
+			
+			//step21: find department and pass value
+			driver.findElement(By.id("createLeadForm_departmentName")).sendKeys("Automation Testing");
+			
+			//step22: find annual revenue and pass value
+			driver.findElement(By.id("createLeadForm_annualRevenue")).sendKeys("120,300.00");
+			
+			//step23: find industry and convert the element into dropdown
+			WebElement element3 = driver.findElement(By.id("createLeadForm_industryEnumId"));
+			Select dd3 = new Select(element3);
+			dd3.selectByValue("IND_SOFTWARE");
+			
+			//step24: find preferred currency and select the AUD
+			WebElement element4 = driver.findElement(By.id("createLeadForm_currencyUomId"));
+			Select dd4 = new Select(element4);
+			dd4.selectByValue("AUD");
+			
+			//step25: find ownership and select 
+			WebElement element5 = driver.findElement(By.id("createLeadForm_ownershipEnumId"));
+			Select dd5 = new Select(element5);
+			dd5.selectByValue("OWN_PUBLIC_CORP");
+			
+			//step26: find number of employees and pass value
+			driver.findElement(By.id("createLeadForm_numberEmployees")).sendKeys("24");
+			
+			//step27: find SIC code and pass value
+			driver.findElement(By.id("createLeadForm_sicCode")).sendKeys("2456");
+			
+			//step28: find ticker symbol and pass value
+			driver.findElement(By.id("createLeadForm_tickerSymbol")).sendKeys("kkk");
+			
+			//step29: find description and pass value
+			driver.findElement(By.id("createLeadForm_description")).sendKeys("I am a software tester");
+			
+			//step30: find important note and pass value
+			driver.findElement(By.id("createLeadForm_importantNote")).sendKeys("Proficient in Selenium");
+			
+			//step31: find area code number
+			driver.findElement(By.id("createLeadForm_primaryPhoneAreaCode")).sendKeys("600081");
+			
+			//step32: find phone number and pass value
+			driver.findElement(By.id("createLeadForm_primaryPhoneNumber")).sendKeys("9360327153");
+			
+			//step33: find person to ask for and pass value
+			driver.findElement(By.id("createLeadForm_primaryPhoneAskForName")).sendKeys("Dhivya");
+			
+			//step34: find email id and pass value
+			driver.findElement(By.id("createLeadForm_primaryEmail")).sendKeys("dpsrini94@gmail.com");
+			
+			//step35: find toname  and pass value
+			driver.findElement(By.id("createLeadForm_generalToName")).sendKeys("Raghavan");
+			
+			//step36:  find attention name and pass value
+			driver.findElement(By.id("createLeadForm_generalAttnName")).sendKeys("Dhivya");
+			
+			//step37: find address lane1 and pass value
+			driver.findElement(By.id("createLeadForm_generalAddress1")).sendKeys("7P - LIG, Thiruvalluvar Nagar, Tondiarpet");
+			
+			//step38: find city and pass value
+			driver.findElement(By.id("createLeadForm_generalCity")).sendKeys("Chennai");
+			
+			//step39find country and convert the element into dropdown
+			WebElement element6 =driver.findElement(By.id("createLeadForm_generalCountryGeoId"));
+			Select dd6 = new Select(element6);
+			dd6.selectByValue("IND");
+			
+			//step40 find state and convert the element into dropdown
+			WebElement element7 = driver.findElement(By.name("generalStateProvinceGeoId"));
+			Select dd7 = new Select(element7);
+			dd7.selectByVisibleText("TAMILNADU");
+						
+			//step41: find postal code and pass value
+			driver.findElement(By.id("createLeadForm_generalPostalCode")).sendKeys("600081");
+			
+			//step42 find create lead and click
+			driver.findElement(By.className("smallSubmit")).click();
+			
+			//step43 verify the title
+			String output = driver.getTitle();
+			System.out.println(output);
+		
+		}
+
+	}

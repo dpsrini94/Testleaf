@@ -1,0 +1,50 @@
+package leafground.learn;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LearnButton {
+
+	public static void main(String[] args) { 
+		
+		//step0: setup the driver using webdriver manager
+		WebDriverManager.chromedriver().setup();
+		
+		//Step1: Launch Browser
+		ChromeDriver driver = new ChromeDriver();
+	
+		//step 2: load url
+		driver.get("http://www.leafground.com/");
+
+		//step:3 maximize the screen
+		driver.manage().window().maximize();
+		
+		//step4: find button and click
+		driver.findElement(By.xpath("//img[@alt='Buttons']")).click();
+
+		//to get location button	
+		Point location = (Point) driver.findElement(By.xpath("//button[text()='Get Position']")).getLocation();
+		System.out.println(location);
+	
+		//to get color button
+		String cssValue = driver.findElement(By.id("color")).getCssValue("background-color");
+		System.out.println(cssValue);
+
+		//to get size
+		int height = driver.findElement(By.id("size")).getSize().getHeight();
+		System.out.println(height);
+		
+		//to get home button
+		driver.findElement(By.id("home")).click();
+		
+		driver.close();
+	}
+
+}
+Output:
+(240, 304)
+rgba(144, 238, 144, 1)
+20

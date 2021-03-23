@@ -1,0 +1,45 @@
+package leafground.learn;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LearnLink {
+
+	public static void main(String[] args) {
+		//step0: setup the driver using webdriver manager
+				WebDriverManager.chromedriver().setup();
+				
+				//Step1: Launch Browser
+				ChromeDriver driver = new ChromeDriver();
+			
+				//step 2: load url
+				driver.get("http://www.leafground.com/");
+
+				//step:3 maximize the screen
+				driver.manage().window().maximize();
+				
+				//step4: to open hyperlink
+				driver.findElement(By.linkText("HyperLink")).click();
+				
+				//step5: to click where am suppose to go
+				driver.findElement(By.linkText("Find where am supposed to go without clicking me?")).click();
+				
+								
+				//step6: to verify am broken
+				String text2 = driver.findElement(By.linkText("Verify am I broken?")).getText();
+				System.out.println(text2);
+				
+				//step7: to find how many links are available in this page
+				int size = driver.findElements(By.linkText("How many links are available in this page?")).size();
+				System.out.println(size);
+				
+				//step8: to click go to home page
+				//driver.findElement(By.partialLinkText("Go to Home Page")).click();
+				driver.findElement(By.xpath("//div[contains(@class,'large-6 small-12')]//a")).click();
+	}
+
+}
+
+Output:

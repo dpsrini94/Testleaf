@@ -1,0 +1,83 @@
+package leafground.learn;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LearnDropdown {
+
+	public static void main(String[] args) throws IOException {
+
+		//step0: setup the driver using webdriver manager
+		WebDriverManager.chromedriver().setup();
+		
+		//Step1: Launch Browser
+		ChromeDriver driver = new ChromeDriver();
+	
+		//step 2: load url
+		driver.get("http://www.leafground.com/");
+
+		//step:3 maximize the screen
+		driver.manage().window().maximize();
+		
+		//step4: to click dropdown link
+		driver.findElement(By.linkText("Drop down")).click();
+		
+		//step5: to click 1st dropdown
+		driver.findElement(By.xpath("//div[@class='example']//select")).click();
+		WebElement dropdown1 = driver.findElement(By.xpath("//div[@class='example']//select"));
+		Select Grp1 = new Select(dropdown1);
+		Grp1.selectByIndex(2);
+		
+		//step6: to click 2nd dropdown
+		driver.findElement(By.xpath("(//div[@class='example']/select)[2]")).click();
+		WebElement dropdown2 = driver.findElement(By.xpath("(//div[@class='example']/select)[2]"));
+		Select Grp2 = new Select(dropdown2);
+		Grp2.selectByVisibleText("Selenium");
+		
+		//step7:  to click 3rd dropdown
+		driver.findElement(By.xpath("(//div[@class='example']/select)[3]")).click();
+		WebElement dropdown3 = driver.findElement(By.xpath("(//div[@class='example']/select)[3]"));
+		Select Grp3 = new Select(dropdown3);
+		Grp3.selectByValue("3");
+		
+		//step8:  to click 4rd dropdown
+		
+		Select dropdown4 = new Select(driver.findElement(By.xpath("(//div[@class='example']/select)[4]")));
+		List<WebElement> options = dropdown4.getOptions();
+		System.out.println(options.size());
+		driver.findElement(By.xpath("(//div[@class='example']/select)[4]")).sendKeys(Keys.TAB);
+		
+		//step9: to click 5th dropdown
+		driver.findElement(By.xpath("(//div[@class='example'])[5]")).click();
+		driver.findElement(By.xpath("//div[@id='contentblock']/section[1]/div[5]/select[1]")).sendKeys("Loadrunner"+Keys.ENTER);
+		
+		//step10: to select 6th dropdown
+		boolean enabled = driver.findElement(By.xpath("(//div[@class='example'])[6]/select/option[4]")).isEnabled();
+		if (enabled == true ) {
+			System.out.println("The options are enabled");
+		}else {
+			System.out.println("the options are disabled");
+		}
+		driver.findElement(By.xpath("(//div[@class='example'])[6]/select/option[4]")).click();
+		WebElement dropdown6 = driver.findElement(By.xpath("(//div[@class='example'])[6]/select/option[4]"));
+		Select Grp6 = new Select(dropdown3);
+		Grp6.selectByValue("3");
+		File screenshotAs = dropdown6.getScreenshotAs(OutputType.FILE);
+		File dest = new File("./snaps/snap2.png");
+		
+		FileUtils.copyFile(screenshotAs, dest);
+		
+		
+	}
+}

@@ -1,0 +1,52 @@
+package leafground.learn;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LeafGroundEdit {
+
+	public static void main(String[] args) {
+				//step0: setup the driver using webdriver manager
+				WebDriverManager.chromedriver().setup();
+				
+				//Step1: Launch Browser
+				ChromeDriver driver = new ChromeDriver();
+			
+				//step 2: load url
+				driver.get("http://www.leafground.com/");
+
+				//step:3 maximize the screen
+				driver.manage().window().maximize();
+				
+				//step4: find button and click
+				driver.findElement(By.linkText("Edit")).click();
+				
+				//step5: go to edit button and pass values
+			    driver.findElement(By.id("email")).sendKeys("dpsrini94@gmail.com");
+			    driver.findElement(By.xpath("//input[@value='Append ']")).sendKeys("Smile");
+			    driver.findElement(By.xpath("//input[@value='Append ']")).sendKeys(Keys.TAB);
+			    
+			    //step6: to get the text entered
+			    String attribute = driver.findElement(By.xpath("//input[@value='TestLeaf']")).getAttribute("value");
+			    System.out.println(attribute);
+			    driver.findElement(By.xpath("(//input[@name='username'])[2]")).clear();
+			    boolean enable = driver.findElement(By.xpath("//input[@disabled='true']")).isEnabled();
+			    
+			   if (enable == true) {
+					System.out.println("The button is not enabled");
+				}else 
+					System.out.println("The button is enabled");
+						
+				//step: to close the browser
+				driver.close();
+
+	}
+}
+
+Output:
+TestLeaf
+The button is enabled

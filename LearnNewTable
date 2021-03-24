@@ -1,0 +1,74 @@
+package leafground.learn;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LearnNewTable {
+
+	public static void main(String[] args) {
+		
+		//step0: setup the driver using webdriver manager
+				WebDriverManager.chromedriver().setup();
+				
+				//Step1: Launch Browser
+				ChromeDriver driver = new ChromeDriver();
+			
+				//step 2: load url
+				driver.get("http://www.leafground.com/");
+
+				//step:3 maximize the screen
+				driver.manage().window().maximize();
+
+				//find table
+				driver.findElement(By.partialLinkText("Table")).click();
+				
+				// to find the number of rows
+				List<WebElement> rowlist = driver.findElements(By.xpath("//table[@id='table_id']//tr"));
+				int rList = rowlist.size();
+				System.out.println("The number if Rows in the web table is: "+rList);
+				
+				//to find the number of columns
+				List<WebElement> list = driver.findElements(By.xpath("//table[@id='table_id']//td"));
+				System.out.println("The number of Columns in the table is: "+list.size());
+								
+				//to interact with the elements to get progress value
+				WebElement element = driver.findElement(By.xpath("//table[@id='table_id']//tr[3]//td[2]"));
+				System.out.println("The Progress value is: "+element.getText());
+				
+				//to get least progress element
+				List<WebElement> list2 = driver.findElements(By.xpath("//table[@id='table_id']//tr[4]/td[2]"));
+				for (WebElement webElement : list2) {
+					System.out.println("The Vital Task for the least Progress value:"+webElement.getText());
+					WebElement Vital = driver.findElement(By.xpath("(//input[@type='checkbox'])[3]"));
+					Vital.click();
+					boolean checkbox = driver.findElement(By.xpath("(//input[@type='checkbox'])[3]")).isSelected();
+					if (checkbox == true) {
+						System.out.println("The Vital Task in the table is selected");
+					}else {
+						System.out.println("The Vital Task in the table is not selected");
+					}
+				}
+				
+				}
+									
+				}
+				
+				Output:
+        The number if Rows in the web table is: 5
+The number of Columns in the table is: 24
+The Progress value is: 80%
+The Vital Task for the least Progress value:30%
+The Vital Task in the table is selected
+				
+
+	
+
+

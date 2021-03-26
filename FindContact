@@ -1,0 +1,100 @@
+package leaftaps.learn;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class FindContact {
+
+	public static void main(String[] args) throws InterruptedException {
+		//step0: setup the driver using webdriver manager
+		WebDriverManager.chromedriver().setup();
+		
+		//Step1: Launch Browser
+		ChromeDriver driver = new ChromeDriver();
+	
+		//step 2: load url
+		driver.get("http://leaftaps.com/opentaps/control/main");
+
+		//step:3 maximize the screen
+		driver.manage().window().maximize();
+		
+		//step4: Find user name and pass value
+		driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+		
+		//step5: find password and pass value
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
+		
+		//step6: find login and click
+		driver.findElement(By.className("decorativeSubmit")).click();
+		
+		//step7: verify the title
+		String title = driver.getTitle();
+		System.out.println(title);
+		
+		//step8: find and click crmsfa
+		driver.findElement(By.linkText("CRM/SFA")).click();
+		
+		//step8: find and click create contact
+		driver.findElement(By.linkText("Create Contact")).click();
+		
+		//step9: find create lead and click
+		driver.findElement(By.linkText("Find Contacts")).click();
+		
+		// (//a[contains(@class,'linktext')])[5]
+				
+		//Click on the Email Field using Xpath Locator and Enter the email using any locator
+		driver.findElement(By.xpath("//span[text()='Email']")).click();
+		driver.findElementByName("emailAddress").sendKeys("vidhyalakshmi029@gmail.com");
+			
+		//Click on Find Contacts using Xpath Locator
+		driver.findElement(By.xpath("//button[text()='Find Contacts']")).click();
+		
+		//Click on the First Resulting Contact
+		Thread.sleep(2000); 
+		String firstcontact = driver.findElement(By.xpath("//table[@class='x-grid3-row-table']//tr[1]/td[1]")).getText();
+		System.out.println("The First contact in the table is: "+ firstcontact);
+		
+		//Get the Text of First Name 
+		Thread.sleep(2000); 
+		String FirstName=driver.findElement(By.xpath("//table[@class='x-grid3-row-table']//tr/td[3]")).getText();
+		
+		System.out.println("The Text in the FirstBox Column:"+FirstName);
+		
+		//Click on the Edit Button
+		//driver.findElement(By.xpath("//table[@class='x-grid3-row-table']//tr[1]/td[1]")).click(); 
+		driver.findElement(By.xpath("(//a[@class='linktext'])[4]")).click();
+		driver.findElement(By.linkText("Edit")).click();
+		
+		//Select New Marketing Campaign as eCommerce Site Internal Campaign by using SelectByValue
+		driver.findElement(By.id("addMarketingCampaignForm_marketingCampaignId")).click();
+		WebElement Markt = driver.findElement(By.id("addMarketingCampaignForm_marketingCampaignId"));
+		Select dd1 = new Select (Markt);
+		dd1.selectByValue("9000");
+		
+		//Get the text of Marketing campaign and Verify it
+		List<WebElement> list = driver.findElements(By.id("addMarketingCampaignForm_marketingCampaignId"));
+		for (WebElement webElement : list) {
+			System.out.println(webElement.getText());
+			if (webElement.getText().contains("9000")) {
+				System.out.println("The text is verified");
+							}
+		}
+		
+				//Click on the add button
+		driver.findElement(By.name("submitButton")).click();
+		
+		//verify Title of the Current page
+		String title2 = driver.getTitle();
+		System.out.println("The Title of tghe current page is " +title2);
+		
+		driver.close();
+
+	}
+
+}

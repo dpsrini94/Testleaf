@@ -1,0 +1,61 @@
+package leaftaps.learn;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LearnXpath {
+
+	public static void main(String[] args) {
+		
+		//step0: setup the driver using webdriver manager
+		WebDriverManager.chromedriver().setup();
+		
+		//Step1: Launch Browser
+		ChromeDriver driver = new ChromeDriver();
+		
+		// Launch the URL
+		driver.get("http://leaftaps.com/opentaps/control/main");
+		
+		// Enter the username based on its label
+		driver.findElement(By.xpath("//input[@id = 'username']")).sendKeys("DemoSalesManager");
+		
+		// Enter the password based on its label
+		driver.findElement(By.xpath("//input[@id = 'password']")).sendKeys("crmsfa");
+		
+		// Click Login
+		driver.findElement(By.xpath("//input[@class = 'decorativeSubmit']")).click();
+		
+		// Click on CRMSFA link
+		driver.findElement(By.xpath("//div[@id='button']")).click();
+		
+		// Click on Leads link
+		driver.findElement(By.xpath("(//div[@class='x-panel-header']//a)[2]")).click();
+		
+		// Click on Merge Leads link
+		driver.findElement(By.xpath("(//div[@class='frameSectionBody']//a)[4]")).click();
+		
+		// Click the first img icon
+		driver.findElement(By.xpath("(//img[@src='/images/fieldlookup.gif'])[1]")).click();
+		
+		// Select the first resulting lead
+		driver.findElement(By.xpath("(//a[@class='linktext'])[1]")).click();
+			
+		// Click the second img icon
+		driver.findElement(By.xpath("(//img[@src='/images/fieldlookup.gif'])[2]")).click();
+		
+		// Select the second resulting lead
+		driver.findElement(By.xpath("(//a[@class='linktext'])[6]")).click();
+						
+		// Click on Merge Lead (submit) button
+		driver.findElement(By.xpath("//a[@class='buttonDangerous']")).click();
+		
+		// Get the company name text based on its label
+		String text = driver.findElement(By.xpath("//span[@id='viewLead_companyName_sp']")).getText();
+		System.out.println("The Merged Company name is:"+text);
+	}
+
+}

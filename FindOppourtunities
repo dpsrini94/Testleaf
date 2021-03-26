@@ -1,0 +1,67 @@
+package leaftaps.learn;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class FindOppourtunities {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+				//step0: setup the driver using webdriver manager
+				WebDriverManager.chromedriver().setup();
+				
+				//Step1: Launch Browser
+				ChromeDriver driver = new ChromeDriver();
+			
+				//step 2: load url
+				driver.get("http://leaftaps.com/opentaps/control/main");
+
+				//step:3 maximize the screen
+				driver.manage().window().maximize();
+				
+				//step4: Find user name and pass value
+				driver.findElement(By.id("username")).sendKeys("DemoSalesManager");
+				
+				//step5: find password and pass value
+				driver.findElement(By.id("password")).sendKeys("crmsfa");
+				
+				//step6: find login and click
+				driver.findElement(By.className("decorativeSubmit")).click();
+				
+
+				//step8: find and click crmsfa
+				driver.findElement(By.linkText("CRM/SFA")).click();
+					
+		        //Click on Oppurtunites Button
+				driver.findElement(By.linkText("Opportunities")).click();
+				
+				//Click on Find Oppurtunites using Xpath Locator
+				driver.findElement(By.linkText("Find Opportunities")).click();
+				
+				//	Get the List of Oppurtunites available in Oppurtunity id usinf Xpath Locator
+				Thread.sleep(1000);
+				List<WebElement> list = driver.findElements(By.xpath("//table[@class='x-grid3-row-table']//tr[1]/td[1]/div[1]"));
+				for (WebElement webElement : list) {
+					System.out.println("The Opportunities in the i'd are:" + webElement.getText());
+				}
+				
+				//Get the Title of the Page and verify it.
+				String title = driver.getTitle();
+				System.out.println(title);
+				driver.close();
+
+	}
+
+}
+
+Output:
+The Opportunities in the i'd are:DemoOpportunity5
+The Opportunities in the i'd are:DemoOpportunity3
+The Opportunities in the i'd are:DemoOpportunity2
+The Opportunities in the i'd are:DemoOpportunity1
+Find Opportunities | opentaps CRM

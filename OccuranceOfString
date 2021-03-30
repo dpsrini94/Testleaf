@@ -1,0 +1,28 @@
+package Assingments;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class OccuranceOfString {
+
+	public static void main(String[] args) {
+		
+		//Create a String with your name as value
+		String value = "welcome to Selenium automation";
+		System.out.println("The Input string is:" + value);
+				
+		//Convert the string into a char array	
+		char[] chArray = value.toCharArray();
+		
+		// Create an empty Map<Character,Integer>
+		Map<Character,Integer> countchar = new HashMap<Character,Integer>();
+		for (int i = 0; i < chArray.length; i++) {
+			countchar.put(chArray[i], countchar.getOrDefault(chArray[i], 0) +1);
+		}
+		System.out.println("The Output is:" + countchar);
+	}
+
+}
+output:
+The Input string is:welcome to Selenium automation
+The Output is:{ =3, a=2, c=1, e=4, i=2, l=2, m=3, n=2, o=4, S=1, t=3, u=2, w=1}

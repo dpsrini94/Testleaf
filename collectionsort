@@ -1,0 +1,52 @@
+package Assingments;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+public class collectionsort {
+
+	public static void main(String[] args) {
+		
+		//String[] input = {"HCL","Wipro","Aspire Systems","CTS"};
+//		Declare a String array and add the Strings values as (HCL, Wipro,  Aspire Systems, CTS)	
+		
+		List<String> slist = new ArrayList<String>();
+		slist.add("HCL");
+		slist.add("Wipro");
+		slist.add("Aspire Systems");
+		slist.add("CTS");
+	
+//		get the length of the array	
+		
+		int size = slist.size();
+		System.out.println("The size of the string is:"+ size);
+		
+//		to print the input
+		System.out.println();
+		System.out.print("The input string order is:");
+		for (String string : slist) {
+			System.out.print(string +",");
+		}
+		
+//		sort the array	and Iterate it in the reverse order
+		
+		Collections.sort(slist);
+		System.out.println();
+		System.out.print("The output string is:");
+		for (int i=slist.size() -1; i>=0; i--) {
+			System.out.print(slist.get(i)+",");
+			
+		}
+	
+//		print the array
+
+	}
+	}
+	
+Output:
+The size of the string is:4
+
+The input string order is:HCL,Wipro,Aspire Systems,CTS,
+The output string is:Wipro,HCL,CTS,Aspire Systems,

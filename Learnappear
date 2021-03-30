@@ -45,6 +45,7 @@ public class Learnappear {
 					if (btn.isDisplayed() == true) {
 						WebElement text2 = driver.findElement(By.xpath("//button[@id='btn']//b[1]/parent::button"));
 						System.out.println("The text in the mising button is:" + text2.getText());
+						break;
 					}
 					driver.close();
 					}

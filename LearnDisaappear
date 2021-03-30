@@ -1,0 +1,50 @@
+package leafground.learn;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import io.netty.util.Timeout;
+
+public class LearnDisaappear {
+
+	public static void main(String[] args) {
+				//step0: setup the driver using webdriver manager
+				WebDriverManager.chromedriver().setup();
+				
+				//Step1: Launch Browser
+				ChromeDriver driver = new ChromeDriver();
+			
+				//step 2: load url
+				driver.get("http://www.leafground.com/");
+
+				//step:3 maximize the screen
+				driver.manage().window().maximize();
+				
+				//to click disapper icon
+				driver.findElement(By.xpath("//h5[text()='Wait to Disappear']")).click();
+				WebElement element = driver.findElement(By.xpath("//button[@id='btn']/b[1]"));
+				WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(5));
+				wait.until(ExpectedConditions.invisibilityOf(element));
+				//to verify
+				if (element.isDisplayed() == true) {
+					WebElement text = driver.findElement(By.id("btn"));
+					System.out.println(text);
+				}
+				else {
+					String string = driver.findElement(By.xpath("//div[@class='disappear']//strong[1]")).getText();
+					System.out.println(string);
+				
+				}
+				driver.close();
+	}
+
+}
+output:
+I know you can do it! Button is disappeared!

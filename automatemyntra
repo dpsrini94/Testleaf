@@ -1,0 +1,129 @@
+package Assingments;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class automatemyntra {
+
+	public static void main(String[] args) {
+		//step0: setup the driver using webdriver manager
+		WebDriverManager.chromedriver().setup();
+		
+		//Step1: Launch Browser and load url
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-notifications");
+		ChromeDriver driver = new ChromeDriver(options);
+		driver.manage().window().maximize();
+		driver.get("https://www.myntra.com/");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+				
+		//Mouse over on WOMEN amd c// Click Jackets & Coats
+		
+		WebElement element1 = driver.findElement(By.xpath("//a[@data-group='women']"));
+		Actions mouseover = new Actions(driver);
+		mouseover.moveToElement(element1).perform();
+		
+		//Click Jackets & Coats
+		WebElement findElement = driver.findElement(By.xpath("//a[@href='/women-jackets-coats']"));
+		wait.until(ExpectedConditions.visibilityOf(findElement));
+		findElement.click();
+		
+		// Find the total count of item 
+		
+		WebElement tcount = driver.findElement(By.className("title-count"));
+		System.out.println("The total number of items in the page is:"+tcount.getText());
+		
+		// Validate the sum of categories count matches
+		List<WebElement> counts = driver.findElements(By.xpath("//span[@class='categories-num']"));
+		int a = 0;
+		String check;
+		int b;
+		
+		for (WebElement ele1 : counts) 
+		{
+			check = ele1.getText().replace("(","");
+			check=check.replace(")","");
+			System.out.println(check);
+			b=Integer.parseInt(check);
+			a=b+a;
+		}
+		System.out.println("The categories count:"+a);
+		check=tcount.getText().replace(" items","");
+		check=check.replace("-","");
+		System.out.println(check);
+			if (a == Integer.parseInt(check)) {
+				try {
+					b=Integer.parseInt(check);
+				} catch (NumberFormatException ex) {
+				System.err.println("Invalid string");	
+				}
+			System.out.println("total count"+check+"equals to the"+a);
+		}
+		
+		// Check Coats
+		driver.findElement(By.xpath("(//label[@class='common-customCheckbox vertical-filters-label']//div)[2]")).click();
+		
+		// Click + More option under BRAND	
+		driver.findElement(By.className("brand-more")).click();
+		
+		//click search button
+		WebElement ele1 = driver.findElement(By.xpath("//input[@placeholder='Search for Brand']"));
+		
+		// Type MANGO and click checkbox
+		ele1.sendKeys("MANGO");
+		wait.until(ExpectedConditions.visibilityOf(ele1)).click();
+		ele1=driver.findElement(By.xpath("//ul[@class='brand-list']//label[1]"));
+		ele1.getText();
+		ele1.click();
+		
+		// Close the pop-up x
+		// Confirm all the Coats are of brand MANGO
+		List<WebElement> ele2 = driver.findElements(By.xpath("//ul[@class='results-base']//a"));
+		int count1 = 0;
+		for (WebElement count : counts) {
+			String attribute = count.getAttribute("href");
+			if (attribute.startsWith("https://www.myntra.com/coats/mango/")) {
+				 count1++;
+			} else {
+			System.out.println("NOT AN MANGO PRODUCT");
+		}
+		if (ele2.size() ==count1) {
+				System.out.println("It is an MAngo product");
+			}else {
+				System.out.println(ele2.size()+"items"+count1+"are not Mango");
+			}
+				}
+		
+		// Sort by Better Discount
+		WebElement ele3 = driver.findElement(By.className("sort-sortBy"));
+		mouseover.moveToElement(ele3).perform();
+		WebElement ele4 = driver.findElement(By.xpath("//label[text()='Better Discount']"));
+		ele4.click();
+		wait.until(ExpectedConditions.visibilityOf(ele4));
+		
+		// Find the price of first displayed item
+		String rs = driver.findElement(By.xpath("(//div[@class='product-price']//span)[2]")).getText();
+		System.out.println(rs);
+		// Mouse over on size of the first item
+		WebElement ele5 = driver.findElement(By.xpath("//div[@class='slick-list']/following-sibling::ul[1]"));
+		mouseover.moveToElement(ele5).perform();
+		
+		// Click on WishList Now
+		WebElement ele6 = driver.findElement(By.xpath("//span[text()='wishlist']"));
+		ele6.click();
+		wait.until(ExpectedConditions.invisibilityOf(ele6));
+		// Close Browser
+		driver.close();
+	}
+
+}

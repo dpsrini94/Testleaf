@@ -1,0 +1,24 @@
+public class learnexcel {
+
+	public static void main(String[] args) throws Throwable {
+		//to setup the excel document path
+		XSSFWorkbook nBook= new XSSFWorkbook("./Data/createlead.xlsx");
+		//to setup the worksheet
+		 XSSFSheet nSheet = nBook.getSheet("Sheet1");
+		 //toget row and cellcount
+		 XSSFRow rowcunt= nSheet.getRow(1);
+		 XSSFCell cellcount = rowcunt.getCell(0);
+		 int lastRowNum = nSheet.getLastRowNum();
+		 System.out.println(lastRowNum);
+		 int lastCellNum = rowcunt.getLastCellNum();
+		 System.out.println(lastCellNum);
+		 for (int i = 1; i <= lastCellNum; i++) {
+			 for (int j = 0; j < lastCellNum; j++) {
+				 String stringCellValue = nSheet.getRow(i).getCell(j).getStringCellValue();
+				 System.out.println(stringCellValue);
+			}
+			 System.out.println();
+		}
+	}
+
+}

@@ -1,0 +1,138 @@
+//testngDynamic.xml->Sheet
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+<parameter name="url" value="http://leaftaps.com/opentaps/"></parameter>
+<parameter name="username" value="DemoSalesManager"></parameter>
+<parameter name="password" value="crmsfa"></parameter>
+  <test thread-count="3" name="Testdata" verbose="5">
+    <classes>
+      <class name="data.provider.ReadExcel"/>
+      <class name="data.provider.CreateLead"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+//ReadExcelSheet
+package data.provider;
+
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.Test;
+
+public class ReadExcel {
+
+	public  String[][]  readData() throws Throwable {
+		//to setup the excel document path
+		XSSFWorkbook nBook= new XSSFWorkbook("./Data/CreateLead.xlsx");
+		
+		//to setup the worksheet
+		 XSSFSheet nSheet = nBook.getSheet("Sheet1");
+		 
+		 //toget row and cellcount
+		 XSSFRow rowcunt= nSheet.getRow(1);
+		 XSSFCell cellcount = rowcunt.getCell(0);
+		 
+		 //to get last row and cell count
+		 int lastRowNum = nSheet.getLastRowNum();
+		 System.out.println(lastRowNum);
+		 int cellNum = nSheet.getRow(1).getLastCellNum();
+		 System.out.println(cellNum);
+		 
+		 //declare 2D data to store the values for data provider
+		 String[][] data = new String[lastRowNum][cellNum];
+		 
+		 for (int i = 1; i <= cellNum; i++) {
+			 for (int j = 0; j < cellNum; j++) {
+				 
+				 String val = nSheet.getRow(i).getCell(j).getStringCellValue();
+				 System.out.println(val);
+				 data[i-1][j]=val;
+				 System.out.println();
+			}
+		 }
+		 return data;
+		}
+	
+}
+//BaseclassSheet
+package testcase;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class baseClass {
+	public ChromeDriver driver;
+	@Parameters({"url","username","password"})
+@BeforeMethod
+	public void preCondition(String url, String uName, String pwd) throws InterruptedException {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get(url);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.findElement(By.id("username")).sendKeys(uName);
+		driver.findElement(By.id("password")).sendKeys(pwd);
+		driver.findElement(By.className("decorativeSubmit")).click();
+		driver.findElement(By.linkText("CRM/SFA")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.linkText("Leads")).click();
+
+	}
+@AfterMethod
+	public void postCondition() {
+		driver.close();
+	}
+}
+//CreateLead
+package data.provider;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.yaml.snakeyaml.reader.ReaderException;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class CreateLead extends baseClass{
+@Test(dataProvider = "sendData")
+	public void createlead(String cname, String fName, String lName) {
+		
+		driver.findElement(By.linkText("Create Lead")).click();
+		driver.findElement(By.id("createLeadForm_companyName")).sendKeys(cname);
+		driver.findElement(By.id("createLeadForm_firstName")).sendKeys(fName);
+		driver.findElement(By.id("createLeadForm_lastName")).sendKeys(lName);
+		driver.findElement(By.name("submitButton")).click();
+		
+}
+@DataProvider
+public String[][] sendData() throws Throwable{
+	ReadExcel re = new ReadExcel();
+String[][] readData = re.readData();
+return readData;
+}
+}
+
+
+
+
+
+
